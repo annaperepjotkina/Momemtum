@@ -12,9 +12,10 @@ document.querySelector('.time').innerHTML = hours + ':' + minutes + ':' + second
 setTimeout(showTime, 1000);
 
 function showDate() {
-    const months = date.getMonth();
-    const year = date.getY
-    document.querySelector('.date');
+    const date = new Date();
+const options = {weekday: 'long', month: 'long', day: 'numeric'};
+const currentDate = date.toLocaleDateString('en-US', options);
+document.querySelector('.date').innerHTML = currentDate;
  }
  showDate()
   }
