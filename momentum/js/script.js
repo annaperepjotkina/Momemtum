@@ -1,4 +1,6 @@
- //Clock
+
+ //Часы
+ //________________________________________________________________________
  function showTime() {
 const time = document.querySelector('.time');
 
@@ -12,7 +14,8 @@ const seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSecon
 document.querySelector('.time').innerHTML = hours + ':' + minutes + ':' + seconds;
 setTimeout(showTime, 1000);
 
-//Date
+//Календарь
+//________________________________________________________________________
 function showDate() {
     const date = new Date();
 const options = {weekday: 'long', month: 'long', day: 'numeric'};
@@ -23,7 +26,8 @@ document.querySelector('.date').innerHTML = currentDate;
   }
  showTime();
 
- //Greeting
+ //Приветствие
+ //________________________________________________________________________
  function showGreeting() {
  const date = new Date();
 const hour = date.getHours();
@@ -38,24 +42,92 @@ if (hour>=0 && hour<5) greeting = "Good night"; }
     }
     
     document.querySelector('.greeting').innerHTML = greeting;
-
-
-  function setLocalStorage() {
-        let input = document.querySelector('.input');
-        input.value = 'name';
-
-        localStorage.setItem('name', name.value);
-      }
-      window.addEventListener('beforeunload', setLocalStorage);
-    
-      function getLocalStorage() {
-        if(localStorage.getItem('name')) {
-            name.value = localStorage.getItem('name');
-        }
-      }
-      window.addEventListener('load', getLocalStorage);
-    
  }
  showGreeting()
 
+ //Фоновые изображения
+ //_______________________________________________________________________
+ const body = document.querySelector('body');
+ console.log(body);
+
+ body.style.backgroundImage = "url('https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/evening/18.jpg')";
+
+
+ //Аудио плееер
+ //________________________________________________________________________
+ const player = document.querySelector ('.player');
+ const playBtn = document.querySelector ('.play');
+ const prevBtn = document.querySelector ('.play-prev player-icon');
+ const nextBtn = document.querySelector ('.play-next');
+ const pauseBtn =document.querySelector ('.pause');
+ const audio = document.querySelector ('.audio');
+ const sounds = ['Aqua Caelestis', 'Ennio Morricone', 'River Flows in You', 'Summer Wind'];
+
+//Назначаем песню по умолчанию
+let soundsIndex = 0;
+ 
+function loadSong(sounds) {
+  audio.src = `assets/sounds/${sounds}.mp3`;
+    console.log(sounds);
+}
+loadSong(sounds [soundsIndex]);
+
+//console.log(playList);
+let isPlay = false; //Создаем флаг - при загрузке не проигрывается
+
+function playAudio() {
+  audio.currentTime = 0; //Чтобы мелодия всегда начиналась сначала
+  audio.play();
+  isPlay = true;
+}
+function pauseAudio() {
+  audio.pause();
+  isPlay = false;
+}
+//При нажатии на кнопку мелодия играет или останавливается
+playBtn.addEventListener('click', () => {
+  if(!isPlay) {
+    playAudio()
+  } else {
+    pauseAudio()
+  }
+});
+
+//Меняем кнопку плей на кнопку пауза
+function toggleBtn() {
+  playBtn.classList.toggle('pause');
+}
+playBtn.addEventListener('click', toggleBtn);
+
+//Переключение мелодий (средыдущая, следующая)
+function playNext() {
+  soundsIndex ++;
+  if (soundsIndex > sounds.length -1) {
+    soundsIndex = 0
+  }
+  loadSong(sounds [soundsIndex]);
+  playAudio();
+}
+
+document.querySelector('.play-next').addEventListener('click', playNext);
+
+function playPrev() {
+  soundsIndex--;
+  if (soundsIndex < 0) {
+    soundsIndex = sounds.length -1
+  }
+  loadSong(sounds [soundsIndex]);
+  playAudio();
+}
+
+document.querySelector('.play-prev').addEventListener('click', playPrev);
+
+//Перечень треков
+const playListItems = document.querySelector('.play-item')
+playListItems = ['Aqua Caelestis', 'Ennio Morricone', 'River Flows in You', 'Summer Wind']
+
+
+
+
+ 
  
