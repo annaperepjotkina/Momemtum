@@ -1,7 +1,7 @@
 @font-face {
-  font-family: 'Arial-MT';
+  font-family: "Arial-MT";
   src: url("../assets/fonts/Arial-MT.woff"); /* Путь к файлу со шрифтом */
- }
+}
 
 * {
   box-sizing: border-box;
@@ -12,11 +12,11 @@
 body {
   min-width: 480px;
   min-height: 100vh;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   font-size: 16px;
   color: #fff;
   text-align: center;
-  background: url("../assets/img/bg.jpg") center/cover, rgba(0, 0, 0, 0.5);
+  background: center/cover, rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
   transition: background-image 1s ease-in-out;
 }
@@ -27,7 +27,7 @@ body {
   align-items: flex-start;
   width: 100%;
   height: 30vh;
-  min-height: 220px;  
+  min-height: 220px;
   padding: 20px;
 }
 
@@ -36,7 +36,7 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 120px;
-  margin-bottom: 28px;
+  margin-bottom: 15px;
 }
 
 .play-list {
@@ -48,9 +48,9 @@ body {
   padding: 5px;
   padding-left: 20px;
   list-style: none;
-  opacity: .8;
+  opacity: 0.8;
   cursor: pointer;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .play-item:hover {
@@ -58,7 +58,7 @@ body {
 }
 
 .play-item::before {
-  content: "\2713";  
+  content: "\2713";
   position: absolute;
   left: 0;
   top: 2px;
@@ -66,7 +66,7 @@ body {
 }
 
 .item-active::before {
-  color: #C5B358;
+  color: #c5b358;
 }
 
 .player-icon,
@@ -80,9 +80,9 @@ body {
   background-color: transparent;
   border: 0;
   outline: 0;
-  opacity: .8;
+  opacity: 0.8;
   cursor: pointer;
-  transition: .3s;  
+  transition: 0.3s;
 }
 
 .player-icon:hover,
@@ -95,7 +95,7 @@ body {
 .slider-icon:active,
 .change-quote:active {
   border: 0;
-  outline: 0;  
+  outline: 0;
   transform: scale(1.1);
 }
 
@@ -118,6 +118,76 @@ body {
   background-image: url("../assets/svg/play-next.svg");
 }
 
+.title {
+  text-align: left;
+  margin-bottom: 15px;
+}
+.progress_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 5px;
+}
+
+.time-audio {
+  font-size: 10px;
+}
+.progress_container {
+  background-color: white;
+  border-radius: 5px;
+  width: 100%;
+  height: 4px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+    display: flex;
+   margin-bottom: 5px;
+   margin-right: 5px;
+}
+
+.progress_bar {
+  background-color: black;
+  border-radius: 5px;
+  height: 4px;
+  align-content: center;
+}
+.play-volume {
+  display: flex;
+  justify-content: left;
+  align-items:center;
+  margin-bottom: 15px;
+}
+.volume-mute {
+  width: 14px;
+  height: 14px;
+  background-image: url("../assets/svg/volume-mute\ \(2\).svg");
+  cursor: pointer;
+  border-color: white;
+  border-radius: 100px;
+}
+.volume_control {
+  width: 95px;
+  height: 3px;
+  margin: 0px 7px;
+  background: white;
+  
+}
+
+.volume_control::-webkit-slider-thumb{
+  background: white;
+  border: 3px solid white;
+}
+
+.volume-up {
+  width: 14px;
+  height: 14px;
+ background-image: url("../assets/svg/volume-mute\ \(2\).svg");
+ 
+  cursor: pointer;
+  border-color: white;
+  border-radius: 100px;
+ }
+
 .weather {
   display: flex;
   flex-direction: column;
@@ -125,7 +195,7 @@ body {
   align-items: flex-start;
   row-gap: 5px;
   width: 180px;
-  min-height: 180px;  
+  min-height: 180px;
   text-align: left;
 }
 
@@ -151,17 +221,17 @@ body {
   padding: 5px;
   font-size: 20px;
   line-height: 24px;
-  color: #fff;  
+  color: #fff;
   border: 0;
   outline: 0;
   border-bottom: 1px solid #fff;
   background-color: transparent;
 }
 
-.city::placeholder {  
+.city::placeholder {
   font-size: 20px;
   color: #fff;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .main {
@@ -172,7 +242,7 @@ body {
   align-items: center;
   width: 100%;
   height: 40vh;
-  min-height: 260px;  
+  min-height: 260px;
   padding: 20px;
 }
 
@@ -196,9 +266,9 @@ body {
 .time {
   min-height: 124px;
   margin-bottom: 10px;
-  font-family: 'Arial-MT';
+  font-family: "Arial-MT";
   font-size: 100px;
-  letter-spacing: -4px;  
+  letter-spacing: -4px;
 }
 
 .date {
@@ -218,7 +288,7 @@ body {
 }
 
 .greeting {
-  flex: 1;  
+  flex: 1;
   padding: 10px;
   text-align: right;
 }
@@ -237,7 +307,7 @@ body {
 
 .name::placeholder {
   color: #fff;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .footer {
@@ -247,13 +317,13 @@ body {
   align-items: center;
   width: 100%;
   height: 30vh;
-  min-height: 160px;  
+  min-height: 160px;
   padding: 20px;
 }
 
 .change-quote {
   margin-bottom: 30px;
-  background-image: url("../assets/svg/reload.svg");  
+  background-image: url("../assets/svg/reload.svg");
 }
 
 .quote {
@@ -267,7 +337,7 @@ body {
 @media (max-width: 768px) {
   .time {
     min-height: 80px;
-    font-size: 72px;    
+    font-size: 72px;
   }
 
   .greeting-container {

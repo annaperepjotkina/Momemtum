@@ -31,27 +31,105 @@ document.querySelector('.date').innerHTML = currentDate;
  function showGreeting() {
  const date = new Date();
 const hour = date.getHours();
-if (hour>=5 && hour<12) greeting = "Good morning"; 
-else { 
-if (hour>=12 && hour<18) greeting = "Good afternoon"; 
-else { 
-if (hour>=18 && hour<24) greeting = "Good evening";
-else { 
-if (hour>=0 && hour<5) greeting = "Good night"; }
-       }
-    }
-    
+if (hour>=5 && hour<12) {
+  greeting = 'Good morning'
+} else if (hour>=12 && hour<18) {
+  greeting = 'Good afternoon'
+} else if (hour>=18 && hour<24) {
+  greeting = 'Good evening'
+} else if (hour>=0 && hour<5) {
+  greeting = 'Good night'
+}
     document.querySelector('.greeting').innerHTML = greeting;
  }
  showGreeting()
 
  //Фоновые изображения
  //_______________________________________________________________________
- const body = document.querySelector('body');
- console.log(body);
+ function getTimeOfDay() {
+  const date = new Date();
+ const hour = date.getHours();
+ if (hour>=5 && hour<12) {
+   return 'morning'
+ } else if (hour>=12 && hour<18) {
+   return 'afternoon'
+ } else if (hour>=18 && hour<24) {
+   return 'evening'
+ } else if (hour>=0 && hour<5) {
+   return  'night'
+ }
+} 
+console.log(getTimeOfDay())
 
- body.style.backgroundImage = "url('https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/evening/18.jpg')";
+let randomNum;
+function getRandomNum(min, max) {
+     min = Math.ceil(1);
+    max = Math.floor(20);
+    return Math.floor(Math.random() * (max - min + 1)) + min; 
+  }
+  getRandomNum(1, 20);
+  
+ 
+  function setBg() {
+    let timeOfDay = getTimeOfDay();
+    let bgNum = getRandomNum().toString().padStart(2, '0');
+    const img =new Image();
+    img.src = `https://raw.githubusercontent.com/annaperepjotkina/stage1-tasks/assets/images/${timeOfDay}/${bgNum}.jpg`
+    img.onload = () => {
+  const body = document.querySelector('body');
+  body.style.backgroundImage = `url("${img.src}")`;
+  console.log(bgNum)
+}
+  }
+  setBg()
+  
+  function getSlideNext() {
+    randomNum++;
+    setBg();
+  }
+  document.querySelector('.slide-next').addEventListener('click', getSlideNext)
 
+  function getSlidePrev() {
+    randomNum--;
+    setBg();
+  }
+  document.querySelector('.slide-prev').addEventListener('click', getSlidePrev)
+
+  //Виджет "цитата дня"
+  //________________________________________________________________________
+  /*const quot = document.querySelector('.quote');
+  const author = document.querySelector('.author');
+  const changeQuoteBtn = document.querySelector('.change-quote');
+  
+  async function getQuotes() {  
+    const quotes = './data.json';
+    const res = await fetch(quotes);
+    const data = await res.json(); 
+    console.log(data);
+  }
+  getQuotes();*/
+
+
+  //Погода
+  //________________________________________________________________________
+  const apiWeather = `https://api.openweathermap.org/data/2.5/weather?q=Minsk&lang=en&APPID=70b998951408ec5dda1b13148cbb1384&units=metric`;
+  const weatherIcon = document.querySelector('.weather-icon');
+const temperature = document.querySelector('.temperature');
+const weatherDescription = document.querySelector('.weather-description');
+
+  async function getWeather() {  
+    const apiWeather = `https://api.openweathermap.org/data/2.5/weather?q=Minsk&lang=en&APPID=70b998951408ec5dda1b13148cbb1384&units=metric`;
+    const res = await fetch(apiWeather);
+    const data = await res.json(); 
+    console.log(data.weather[0].id, data.weather[0].description, data.main.temp);
+
+    weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+  temperature.textContent = `${data.main.temp}°C`;
+  weatherDescription.textContent = data.weather[0].description;
+  }
+  getWeather()
+
+  
 
  //Аудио плееер
  //________________________________________________________________________
@@ -61,6 +139,9 @@ if (hour>=0 && hour<5) greeting = "Good night"; }
  const nextBtn = document.querySelector ('.play-next');
  const pauseBtn =document.querySelector ('.pause');
  const audio = document.querySelector ('.audio');
+ const progress_container = document.querySelector ('.progress_container')
+ const progress_bar = document.querySelector ('.progress_bar')
+ const title = document.querySelector ('.title')
  const sounds = ['Aqua Caelestis', 'Ennio Morricone', 'River Flows in You', 'Summer Wind'];
 
 //Назначаем песню по умолчанию
@@ -69,10 +150,10 @@ let soundsIndex = 0;
 function loadSong(sounds) {
   audio.src = `assets/sounds/${sounds}.mp3`;
     console.log(sounds);
+    title.innerHTML = sounds;
 }
 loadSong(sounds [soundsIndex]);
 
-//console.log(playList);
 let isPlay = false; //Создаем флаг - при загрузке не проигрывается
 
 function playAudio() {
@@ -124,10 +205,29 @@ document.querySelector('.play-prev').addEventListener('click', playPrev);
 
 //Перечень треков
 const playListItems = document.querySelector('.play-item')
-playListItems = ['Aqua Caelestis', 'Ennio Morricone', 'River Flows in You', 'Summer Wind']
+//playListItems = ['Aqua Caelestis', 'Ennio Morricone', 'River Flows in You', 'Summer Wind']
 
+//Прогресс бар
+function updateProgress (event) {
+const {duration, currentTime} = event.srcElement
+const progressPercent = (currentTime / duration) * 100;
+progress_bar.style.width = `${progressPercent}%`;
+}
+audio.addEventListener('timeupdate', updateProgress )
 
+//Перемотка
+function setProgress (e) {
+const width = this.clientWidth;//Находим длину контейнера
+const click = e.offsetX; //Находим координаты клика по оси Х
+const duration = audio.duration;//Получим длину трека
 
+audio.currentTime = (click / width) * duration;
+}
+progress_container.addEventListener('click', setProgress)
 
  
- 
+ //Чтобы после окончания одной песни начинала проигрываться следующая
+audio.addEventListener('ended', playNext)
+console.log(audio.duration)
+
+volumeMute = document.querySelector('.volume-mute').addEventListener('click', pauseAudio)
